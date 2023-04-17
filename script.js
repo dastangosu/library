@@ -39,12 +39,6 @@ Book.prototype.toggleReadStatus = function () {
   }
 }
 
-
-function createBook(author, title, numOfPages, readStatus) {
-  let book = new Book(author, title, numOfPages, readStatus);
-  return book;
-}
-
 function addBookToLibrary(book) {
   myLibrary.push(book);
   storeInLS();
@@ -127,7 +121,7 @@ submitButton.addEventListener('click', (e) => {
       read = "Not Read"
     }
     let numberOfPages = +pagesInput.value;
-    let book = createBook(authorInput.value, titleInput.value, numberOfPages, read);
+    let book = new Book(authorInput.value, titleInput.value, numberOfPages, read);
     addBookToLibrary(book);
     addBooktoDOM(book);
     giveBooksAnIndexAttribute();
@@ -155,9 +149,9 @@ window.onload = function () {
     myLibrary = retrieveFromLS();
   }
   else {
-    let book1 = createBook("Sun Tzu", "The Art of War", 288, "Not Read");
+    let book1 = new Book("Sun Tzu", "The Art of War", 288, "Not Read");
     addBookToLibrary(book1);
-    let book2 = createBook("Dostoevsky", "The Brothers Karamazov", 840, "Not Read");
+    let book2 = new Book("Dostoevsky", "The Brothers Karamazov", 840, "Not Read");
     addBookToLibrary(book2);
   }
   displayBooks();
