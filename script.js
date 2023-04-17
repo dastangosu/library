@@ -13,13 +13,13 @@ const newBookButton = document.querySelector('#new-book-button');
 //function to store and retrieve from LocalStorage
 function storeInLS() {
   const jsonString = JSON.stringify(myLibrary);
-  localStorage.setItem('myLibrary',jsonString);
+  localStorage.setItem('myLibrary', jsonString);
 }
 function retrieveFromLS() {
   const jsonString = localStorage.getItem('myLibrary');
   const retrievedArray = JSON.parse(jsonString);
   retrievedArray.forEach((book) => {
-    Object.setPrototypeOf(book,Book.prototype);
+    Object.setPrototypeOf(book, Book.prototype);
   })
   return retrievedArray;
 }
@@ -30,8 +30,8 @@ function Book(author, title, numOfPages, readStatus) {
   this.numOfPages = numOfPages;
   this.readStatus = readStatus;
 }
-Book.prototype.toggleReadStatus = function() {
-  if(this.readStatus==="Read") {
+Book.prototype.toggleReadStatus = function () {
+  if (this.readStatus === "Read") {
     this.readStatus = "Not Read";
   }
   else {
@@ -70,13 +70,13 @@ function addBooktoDOM(book) {
   readStatus.classList.add('read-status');
   readStatus.textContent = book.readStatus;
 
-  if(book.readStatus === 'Read') {   //add .read class to change appearance
+  if (book.readStatus === 'Read') {   //add .read class to change appearance
     readStatus.classList.add('read');
   }
   readStatus.addEventListener('click', () => { //event listener to toggle the read status
     book.toggleReadStatus();
     readStatus.textContent = book.readStatus;
-    if(book.readStatus==='Read') {
+    if (book.readStatus === 'Read') {
       readStatus.classList.add('read');
     }
     else {
@@ -88,7 +88,7 @@ function addBooktoDOM(book) {
   removeButton.classList.add('remove-button');
   removeButton.textContent = 'Remove';
   removeButton.addEventListener('click', () => {
-    myLibrary.splice(+removeButton.parentNode.dataset.bookIndex,1);  //remove the object from array
+    myLibrary.splice(+removeButton.parentNode.dataset.bookIndex, 1);  //remove the object from array
     storeInLS();
     removeButton.parentNode.remove(); //remove the node from DOM
     giveBooksAnIndexAttribute();  //update the index attributes of elements
@@ -107,8 +107,8 @@ function addBooktoDOM(book) {
 
 function giveBooksAnIndexAttribute() {
   const bookCards = document.querySelectorAll('.book');
-  for(let i = 0; i<bookCards.length;i++) {
-    bookCards[i].setAttribute('data-book-index',i.toString());  //give index data attribute to books in order to link them with array 
+  for (let i = 0; i < bookCards.length; i++) {
+    bookCards[i].setAttribute('data-book-index', i.toString());  //give index data attribute to books in order to link them with array 
   }
 }
 
@@ -147,16 +147,20 @@ function overlayOff() {
   overlay.style.display = 'none';
 }
 
-newBookButton.addEventListener('click',overlayOn);  //display overlay when "New Book" is clicked
-overlay.addEventListener('click',overlayOff);
+newBookButton.addEventListener('click', overlayOn);  //display overlay when "New Book" is clicked
+overlay.addEventListener('click', overlayOff);
 
-window.onload = function() {
-  if(localStorage.getItem('myLibrary')) {   //check if local storage has myLibrary
+window.onload = function () {
+  if (localStorage.getItem('myLibrary')) {   //check if local storage has myLibrary
     myLibrary = retrieveFromLS();
-    displayBooks();
-  } else {
-    myLibrary = []; // Create a new empty array if myLibrary data does not exist in localStorage
   }
+  else {
+    let book1 = createBook("Sun Tzu", "The Art of War", 288, "Not Read");
+    addBookToLibrary(book1);
+    let book2 = createBook("Dostoevsky", "The Brothers Karamazov", 840, "Not Read");
+    addBookToLibrary(book2);
+  }
+  displayBooks();
 }
 
 
